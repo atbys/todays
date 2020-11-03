@@ -23,6 +23,10 @@ func sessionCheck() gin.HandlerFunc { //middleware
 		UserID := session.Get("UserID")
 		log.Println("[+] session check process start: user_id is ", UserID)
 		if UserID == nil {
+			//TODO
+			//今はクッキーに存在しているかどうかの確認だけなので危ない
+			//ユーザIDのハッシュをクッキーに保存しておいて，
+			//DBに保存してあるユーザIDと比較する
 			log.Println("not Loged in")
 			c.Redirect(http.StatusFound, "/login")
 			c.Abort()
