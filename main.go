@@ -4,13 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var engine *gin.Engine
+
 func main() {
-	engine := gin.Default()
+	engine = gin.Default()
 	engine.LoadHTMLGlob("./template/*")
-	engine.GET("/", func(c *gin.Context) {
-		render(c, gin.H{
-			"description": 1907,
-		}, "index.html")
-	})
+	initializeRoutes()
 	engine.Run(":8080")
 }

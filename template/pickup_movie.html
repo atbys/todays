@@ -1,0 +1,15 @@
+{{ template "header.html" .}}
+
+<h3>Today's Movie is ...</h1>
+<br>
+<h1>{{.title}}</h1>
+<br>
+<p>{{.rate}}</p>
+
+<ul>
+    {{range .reviews}}
+    <li>{{.}}</li>
+    {{end}}
+</ul>
+
+{{ template "footer.html" .}}
