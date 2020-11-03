@@ -1,0 +1,7 @@
+{{define "logout"}}
+
+<form action="/logout" method="post">
+    <p>ユーザーID: {{.user_id}}</p>
+    <p><input type="submit" value="ログアウト"></p>
+</form>
+{{end}}
