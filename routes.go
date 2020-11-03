@@ -3,7 +3,9 @@ package main
 func initializeRoutes() {
 	engine.GET("/", showIndex)
 	engine.GET("/login", GetLogin)
+	engine.GET("/pickup_movie", showPickUpMovie)
 	engine.POST("/login", PostLogin)
+
 	authGroup := engine.Group("/")
 	authGroup.Use(sessionCheck()) //ログイン状態で閲覧するページをこのグループに追加する
 	{

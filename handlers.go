@@ -16,7 +16,7 @@ func showIndex(c *gin.Context) {
 func showPickUpMovie(c *gin.Context) {
 	id := "83583" // 本来はコンテクストのパラメータから取得
 	m := GetMovieInfo(id)
-	fmt.Println("[+] Got movie infomation")
+	fmt.Println("[+] Got movie information")
 	render(c, gin.H{
 		"title":   m.Titile,
 		"rate":    m.Rate,
