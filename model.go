@@ -1,6 +1,6 @@
 package main
 
-type Movie struct {
+type MovieInfo struct {
 	Id       string
 	Titile   string
 	Rate     string
@@ -8,10 +8,18 @@ type Movie struct {
 	Reviews  []string
 }
 
+//DB用
 type User struct {
+	UserID     int
 	Name       string
-	NumOfClips int
-	Clips      []string
-	NumOfMarks int
-	Marks      []string
+	Password   string
+	FilmarksID string
+}
+
+//DB用
+type Movie struct {
+	MovieID      int
+	ClipedUserID int
+	Title        string
+	Rate         float32
 }

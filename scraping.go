@@ -35,7 +35,7 @@ func GetMovieReviews(doc *goquery.Document) []string {
 	return movie_reviews
 }
 
-func GetMovieInfo(id string) *Movie {
+func GetMovieInfo(id string) *MovieInfo {
 	targetURL := baseURL + "/movies/" + id + "/no_spoiler"
 
 	doc, err := goquery.NewDocument(targetURL)
@@ -43,7 +43,7 @@ func GetMovieInfo(id string) *Movie {
 		panic("failed to get html")
 	}
 
-	movie := &Movie{
+	movie := &MovieInfo{
 		Titile:   GetMovieTitle(doc),
 		Rate:     GetMovieRate(doc),
 		Abstruct: "TODO", //GetMovieAbstruct(doc)
@@ -132,10 +132,4 @@ func GetIdOfMarkMovies(username string) []string {
 	}
 
 	return ids
-}
-
-func (self *User) MovieInfoUpdate() {
-	username := self.Name
-	self.Clips = GetIdOfClipMovies(username)
-	self.Marks = GetIdOfMarkMovies(username)
 }
