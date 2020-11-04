@@ -52,23 +52,56 @@ func Logout(c *gin.Context) {
 	session.Save()
 }
 
-func GetLogin(c *gin.Context) { // ok
+func LoginFromGet(c *gin.Context) { // ok
 	render(c, gin.H{
 		"UserID":       "",
 		"ErrorMessage": "",
 	}, "login")
 }
 
-func PostLogin(c *gin.Context) { //maybe bad
+func LoginFromPost(c *gin.Context) { //maybe bad
 	userID := c.PostForm("userId")
 	Login(c, userID)
 	c.Redirect(http.StatusFound, "/loggedin") // test
 }
 
-func PostLogout(c *gin.Context) {
+func LogoutFromPost(c *gin.Context) {
 	Logout(c)
 	render(c, gin.H{
 		"UserID":       "",
 		"ErrorMessage": "",
 	}, "login")
+}
+
+func SignupFromGet(c *gin.Context) {
+	render(c, gin.H{}, "signup.html")
+}
+
+func SignupFromPost(c *gin.Context) {
+	var form User
+
+	if err := c.Bind(&form); err != nil {
+		c.HTML(http.StatusBadRequest, "signup.html", gin.H{"err": err})
+		c.Abort()
+	} else {
+		filmarksID := c.PostForm("filmarks_id")
+		password := c.PostForm("password")
+		name := c.PostForm("name")
+		err := createUser(name, filmarksID, password)
+		if err != nil {
+			c.HTML(http.StatusBadRequest, "signup.html", gin.H{"err": err})
+		}
+		c.Redirect(http.StatusFound, "/login")
+	}
+}
+
+func createUser(name, fid, password string) error {
+	endcryptedPassword, _ := PasswordEncrypt(password)
+	user := User{
+		FilmarksID: fid,
+		Password:   endcryptedPassword,
+		Name:       name,
+	}
+	RegistUser(&user)
+	return nil
 }

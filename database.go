@@ -44,6 +44,8 @@ func InsertMovie(db *gorm.DB, m *Movie) {
 	db.Model(&Movie{}).Create(m)
 }
 
-func RegistUser(db *gorm.DB, user *User) {
+func RegistUser(user *User) {
+	db := DbConnect()
+	defer db.Close()
 	db.Model(&User{}).Create(user)
 }

@@ -10,7 +10,6 @@ type MovieInfo struct {
 
 //DB用
 type User struct {
-	UserID     int
 	Name       string
 	Password   string
 	FilmarksID string
