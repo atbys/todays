@@ -38,12 +38,21 @@ func sessionCheck() gin.HandlerFunc { //middleware
 	}
 }
 
-func Login(c *gin.Context, UserID string) { //maybe bad
-	log.Println("[+] login process start : user_id is ", UserID)
-	session := sessions.Default(c) // here is bag
-	log.Println("[+] hey")
-	session.Set("UserID", UserID)
-	session.Save()
+func Login(c *gin.Context, UserID, password string) {
+	savedPassword := GetUser(UserID).Password
+	inputPassword := password
+	err := CompareHashAndPassword(savedPassword, inputPassword)
+	if err != nil {
+		log.Println("Can't login")
+		c.Redirect(http.StatusFound, "index.html")
+		c.Abort()
+	} else {
+		log.Println("[+] Logged in")
+		session := sessions.Default(c)
+		session.Set("UserID", UserID)
+		session.Save()
+		c.Redirect(302, "/loggedin")
+	}
 }
 
 func Logout(c *gin.Context) {
@@ -52,16 +61,17 @@ func Logout(c *gin.Context) {
 	session.Save()
 }
 
-func LoginFromGet(c *gin.Context) { // ok
+func LoginFromGet(c *gin.Context) {
 	render(c, gin.H{
 		"UserID":       "",
 		"ErrorMessage": "",
 	}, "login")
 }
 
-func LoginFromPost(c *gin.Context) { //maybe bad
+func LoginFromPost(c *gin.Context) {
 	userID := c.PostForm("userId")
-	Login(c, userID)
+	password := c.PostForm("password")
+	Login(c, userID, password)
 	c.Redirect(http.StatusFound, "/loggedin") // test
 }
 
@@ -74,7 +84,9 @@ func LogoutFromPost(c *gin.Context) {
 }
 
 func SignupFromGet(c *gin.Context) {
-	render(c, gin.H{}, "signup.html")
+	render(c, gin.H{
+		"err": "",
+	}, "signup.html")
 }
 
 func SignupFromPost(c *gin.Context) {

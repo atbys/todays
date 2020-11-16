@@ -6,6 +6,7 @@ func initializeRoutes() {
 	engine.GET("/pickup_movie", showPickUpMovie)
 	engine.POST("/login", LoginFromPost)
 	engine.GET("/signup", SignupFromGet)
+	engine.POST("/signup", SignupFromPost)
 	authGroup := engine.Group("/")
 	authGroup.Use(sessionCheck()) //ログイン状態で閲覧するページをこのグループに追加する
 	{

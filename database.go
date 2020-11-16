@@ -49,3 +49,10 @@ func RegistUser(user *User) {
 	defer db.Close()
 	db.Model(&User{}).Create(user)
 }
+
+func GetUser(username string) User {
+	db := DbConnect()
+	var user User
+	db.First(&user, "filmarks_id=?", username)
+	return user
+}
