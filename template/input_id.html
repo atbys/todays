@@ -1,0 +1,9 @@
+{{ template "header.html" .}}
+
+<h1>Clipから選ぶ</h1>
+<p>FilmarksのIDを入力してください</p>
+<form action="/rand_clip" method="get">
+    <input type="text" name="filmarks_id" id="filmarks_id">
+    <input type="submit" value="映画を選ぶ">
+</form>
+{{ template "footer.html" .}}
