@@ -24,6 +24,7 @@ func showPickUpMovie(c *gin.Context) {
 	fmt.Println("[+] Got movie information")
 	render(c, gin.H{
 		"title":   m.Titile,
+		"link":    m.FLink,
 		"rate":    m.Rate,
 		"reviews": m.Reviews,
 	}, "pickup_movie.html")

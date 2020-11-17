@@ -47,6 +47,7 @@ func GetMovieInfo(id string) *MovieInfo {
 		Titile:   GetMovieTitle(doc),
 		Rate:     GetMovieRate(doc),
 		Abstruct: "TODO", //GetMovieAbstruct(doc)
+		FLink:    targetURL,
 		Reviews:  GetMovieReviews(doc),
 	}
 

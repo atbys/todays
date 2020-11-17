@@ -5,6 +5,7 @@ type MovieInfo struct {
 	Titile   string
 	Rate     string
 	Abstruct string
+	FLink    string
 	Reviews  []string
 }
 
