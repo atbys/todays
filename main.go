@@ -1,12 +1,16 @@
 package main
 
 import (
+	"flag"
 	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 var engine *gin.Engine
+var (
+	daemon = flag.Bool("d", false, "daemon")
+)
 
 func main() {
 	engine = gin.Default()
@@ -15,6 +19,10 @@ func main() {
 
 	initializeSession() //セッション管理の初期化の関係で絶対にこっちを先に処理する
 	initializeRoutes()
-
-	engine.Run(":8080")
+	flag.Parse()
+	if *daemon {
+		engine.Run(":80")
+	} else {
+		engine.Run(":8080")
+	}
 }
